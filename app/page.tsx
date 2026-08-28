@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Sparkles, Search, MapPin, Calendar, Wallet } from "lucide-react";
+import Image from "next/image";
+import { MessageSquare, Bot, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { Card } from "@/components/ui/Card";
 import { NavBar } from "@/components/layout/NavBar";
 import { Footer } from "@/components/layout/Footer";
 import { usePlanStore } from "@/store/usePlanStore";
@@ -17,10 +17,36 @@ const QUICK_PROMPTS = [
   { icon: "🏕️", text: "Find me a family friendly adventure." },
 ];
 
-const FEATURES = [
-  { icon: MapPin, label: "Smart destinations" },
-  { icon: Calendar, label: "Day-by-day plans" },
-  { icon: Wallet, label: "Budget aware" },
+const HOW_IT_WORKS = [
+  {
+    step: "01",
+    title: "Describe your trip",
+    description:
+      "Talk naturally \u2014 no forms, no dropdowns. Just tell us what you want.",
+    icon: MessageSquare,
+  },
+  {
+    step: "02",
+    title: "AI builds your plan",
+    description:
+      "Extracts details, checks constraints, and curates personalized recommendations.",
+    icon: Bot,
+  },
+  {
+    step: "03",
+    title: "Refine & go",
+    description:
+      "Keep, replace, or adjust any pick. AI adapts until you\u2019re happy.",
+    icon: Sparkles,
+  },
+];
+
+const DESTINATIONS = [
+  { name: "Tokyo", src: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&h=300&fit=crop" },
+  { name: "Beach", src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop" },
+  { name: "Mountains", src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=300&fit=crop" },
+  { name: "Reykjavik", src: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=400&h=300&fit=crop" },
+  { name: "Landscape", src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=300&fit=crop" },
 ];
 
 export default function HomePage() {
@@ -34,31 +60,32 @@ export default function HomePage() {
 
   return (
     <div className="relative flex min-h-screen flex-col overflow-hidden">
-      {/* Ambient glow */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-purple/20 blur-[120px]" />
-
       <NavBar />
 
-      <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-20 sm:py-28">
-        <div className="flex flex-col items-center text-center">
-          <Badge variant="ai-pill" icon={<Sparkles className="h-3.5 w-3.5" />}>
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="relative mx-auto max-w-4xl px-6 pt-20 pb-16 text-center sm:pt-28">
+          <div className="pointer-events-none absolute top-1/4 left-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple/15 blur-[120px]" />
+
+          <Badge variant="ai-pill" icon={<span className="h-1.5 w-1.5 rounded-full bg-purple" />}>
             AI-powered travel planning
           </Badge>
 
-          <h1 className="mt-8 max-w-3xl font-fraunces text-5xl font-semibold leading-tight text-text-primary sm:text-6xl">
+          <h1 className="mt-8 max-w-3xl font-fraunces text-5xl font-medium leading-tight tracking-tight text-white sm:text-6xl lg:text-7xl">
             Plan your perfect trip{" "}
             <span className="font-light italic text-gradient">with AI.</span>
           </h1>
 
-          <p className="mt-6 max-w-xl font-outfit text-lg text-text-muted">
-            Tell us where you want to go. We&apos;ll craft personalized
-            recommendations and a day-by-day itinerary just for you.
+          <p className="mx-auto mt-6 max-w-xl font-outfit text-xl leading-relaxed text-text-muted">
+            Tell us where you want to go, what you love, and what matters to
+            you. We&apos;ll build a trip around you.
           </p>
 
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link href="/plan/step-1">
               <Button size="lg" className="px-8">
-                Start planning →
+                Start planning
+                <span className="ml-1">&rarr;</span>
               </Button>
             </Link>
             <Link href="/explore">
@@ -68,56 +95,76 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-text-muted">
-            {FEATURES.map((f) => (
-              <div key={f.label} className="flex items-center gap-2">
-                <f.icon className="h-5 w-5 text-purple" />
-                <span className="font-outfit text-sm">{f.label}</span>
+          {/* Destination Images Carousel */}
+          <div className="mt-16 flex items-center justify-center gap-4 overflow-hidden">
+            {DESTINATIONS.map((dest, i) => (
+              <div
+                key={dest.name}
+                className={`relative h-40 flex-shrink-0 overflow-hidden rounded-xl ${
+                  i === 2 ? "h-44 w-[195px]" : "w-[186px]"
+                }`}
+              >
+                <Image
+                  src={dest.src}
+                  alt={dest.name}
+                  fill
+                  className="object-cover"
+                  sizes="186px"
+                />
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Quick prompts */}
-        <div className="mx-auto mt-20 max-w-3xl">
-          <p className="mb-4 text-center font-outfit text-sm text-text-muted">
-            Try one of these:
+        {/* Quick Prompts Section */}
+        <section className="mx-auto max-w-5xl px-6 py-16">
+          <p className="mb-6 text-center font-outfit text-sm font-medium uppercase tracking-[0.14em] text-text-muted">
+            Try a quick prompt
           </p>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {QUICK_PROMPTS.map((p) => (
-              <Card
+              <button
                 key={p.text}
-                className="group cursor-pointer p-5 transition-all duration-200 hover:border-purple hover:shadow-purple-glow"
                 onClick={() => startWithPrompt(p.text)}
+                className="flex flex-col items-start gap-3 rounded-2xl border border-border bg-bg-card p-5 text-left transition-all duration-200 hover:border-purple/50 hover:bg-white/[0.02]"
               >
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">{p.icon}</span>
-                  <p className="font-outfit text-sm text-text-primary">
-                    {p.text}
-                  </p>
-                </div>
-              </Card>
+                <span className="text-2xl">{p.icon}</span>
+                <p className="font-outfit text-sm text-text-muted">{p.text}</p>
+              </button>
             ))}
           </div>
+        </section>
+
+        {/* Divider */}
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="h-px bg-border" />
         </div>
 
-        {/* Search bar */}
-        <div className="mx-auto mt-12 flex max-w-xl items-center gap-3 rounded-input border border-border bg-bg-card px-4 py-3">
-          <Search className="h-5 w-5 text-text-muted" />
-          <input
-            placeholder="Describe your dream trip..."
-            className="w-full bg-transparent font-outfit text-sm text-text-primary placeholder:text-text-muted focus:outline-none"
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && e.currentTarget.value.trim()) {
-                startWithPrompt(e.currentTarget.value.trim());
-                window.location.href = "/plan/step-1";
-              }
-            }}
-          />
-          <Link href="/plan/step-1">
-            <Button size="sm">Go</Button>
-          </Link>
-        </div>
+        {/* How WanderAI Works Section */}
+        <section className="mx-auto max-w-5xl px-6 py-20">
+          <p className="mb-10 text-center font-outfit text-sm font-medium uppercase tracking-[0.14em] text-text-muted">
+            How WanderAI works
+          </p>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {HOW_IT_WORKS.map((item) => (
+              <div
+                key={item.step}
+                className="rounded-2xl border border-border bg-bg-card p-6"
+              >
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/5">
+                  <item.icon className="h-5 w-5 text-text-muted" />
+                </div>
+                <p className="mb-1 font-mono text-xs text-purple">{item.step}</p>
+                <h3 className="font-fraunces text-lg font-semibold text-white">
+                  {item.title}
+                </h3>
+                <p className="mt-2 font-outfit text-sm leading-relaxed text-text-muted">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
 
       <Footer />

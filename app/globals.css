@@ -4,8 +4,9 @@
 @config "../tailwind.config.ts";
 
 :root {
-  --bg-base: #0a0b14;
-  --bg-card: #0d0d18;
+  --bg-base: #0D0D18;
+  --bg-card: #1C1D2E;
+  --bg-card-alt: #12131f;
   --purple: #6c63ff;
   --purple-light: #8b7cf8;
   --teal: #00c9a7;
@@ -41,8 +42,16 @@ a {
 }
 
 @layer components {
+  .bg-grad-purple {
+    background: linear-gradient(135deg, #6C63FF 0%, #8B7CF8 100%);
+  }
+
+  .bg-grad-purple-soft {
+    background: linear-gradient(135deg, rgba(108,99,255,0.15) 0%, rgba(139,124,248,0.05) 100%);
+  }
+
   .text-gradient {
-    background: var(--grad-purple, linear-gradient(164deg, #6c63ff 0%, #8b7cf8 100%));
+    background: var(--grad-purple, linear-gradient(135deg, #6C63FF 0%, #8B7CF8 100%));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -55,7 +64,7 @@ a {
   }
 
   .card-surface {
-    background: #0d0d18;
+    background: #1C1D2E;
     border: 1px solid #23243a;
     border-radius: 16px;
   }

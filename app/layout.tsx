@@ -15,7 +15,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${fraunces.variable} ${outfit.variable} ${jetbrainsMono.variable}`}>
       <body
         suppressHydrationWarning
         className="min-h-screen bg-bg-base font-outfit text-text-primary antialiased"

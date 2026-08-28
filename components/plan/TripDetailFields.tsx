@@ -1,110 +1,123 @@
 "use client";
 
 import * as React from "react";
-import { Pencil, MapPin, Calendar, Wallet, Sparkles, Users, Compass } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
-import { cn } from "@/lib/utils";
 import type { ExtractedDetails } from "@/types/trip";
+import { cn } from "@/lib/utils";
 
 interface TripDetailFieldProps {
-  icon: React.ReactNode;
+  emoji: string;
   label: string;
-  value: string;
-  aiDetected?: boolean;
-  onEdit?: () => void;
+  value?: string;
+  placeholder: string;
+  detected?: boolean;
+  compact?: boolean;
 }
 
-function Field({ icon, label, value, aiDetected, onEdit }: TripDetailFieldProps) {
+function Field({
+  emoji,
+  label,
+  value,
+  placeholder,
+  detected,
+  compact,
+}: TripDetailFieldProps) {
   return (
-    <div className="flex items-center gap-4 rounded-input border border-border bg-bg-card p-4">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-purple/10 text-purple">
-        {icon}
-      </div>
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <p className="font-outfit text-xs text-text-muted">{label}</p>
-          {aiDetected && (
-            <Badge variant="ai-detected">AI Detected</Badge>
-          )}
-        </div>
-        <p className="truncate font-outfit text-sm font-semibold text-text-primary">
-          {value}
-        </p>
-      </div>
-      {onEdit && (
-        <button
-          onClick={onEdit}
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-white/5 hover:text-text-primary"
-        >
-          <Pencil className="h-4 w-4" />
-        </button>
+    <div
+      className={cn(
+        "flex flex-col rounded-2xl border bg-[#12131f]",
+        detected ? "border-purple/40" : "border-border",
+        compact ? "gap-0 p-3" : "gap-1 p-4"
       )}
+    >
+      <div className="flex items-center gap-2">
+        <span className="font-outfit text-sm leading-none">{emoji}</span>
+        <span className="font-outfit text-xs font-medium leading-none text-text-muted">
+          {label}
+        </span>
+      </div>
+      <p
+        className={cn(
+          "font-outfit leading-none text-[#3a3b55]",
+          compact ? "pt-1.5 text-xs" : "pt-1 text-sm"
+        )}
+      >
+        {value || placeholder}
+      </p>
     </div>
   );
 }
 
 interface TripDetailFieldsProps {
   details: ExtractedDetails | null;
-  onEdit?: (field: keyof ExtractedDetails) => void;
   className?: string;
 }
 
 export function TripDetailFields({
   details,
-  onEdit,
   className,
 }: TripDetailFieldsProps) {
-  const fields: TripDetailFieldProps[] = [
-    {
-      icon: <MapPin className="h-5 w-5" />,
-      label: "Location",
-      value: details?.location || "—",
-      aiDetected: true,
-      onEdit: onEdit ? () => onEdit("location") : undefined,
-    },
-    {
-      icon: <Calendar className="h-5 w-5" />,
-      label: "Dates",
-      value: details?.dates || "—",
-      onEdit: onEdit ? () => onEdit("dates") : undefined,
-    },
-    {
-      icon: <Wallet className="h-5 w-5" />,
-      label: "Budget",
-      value: details
-        ? `${details.currency} ${details.budget.toLocaleString()}`
-        : "—",
-      aiDetected: true,
-      onEdit: onEdit ? () => onEdit("budget") : undefined,
-    },
-    {
-      icon: <Compass className="h-5 w-5" />,
-      label: "Travel Style",
-      value: details?.travelStyle || "—",
-      aiDetected: true,
-      onEdit: onEdit ? () => onEdit("travelStyle") : undefined,
-    },
-    {
-      icon: <Sparkles className="h-5 w-5" />,
-      label: "Interests",
-      value: details?.interests.join(" · ") || "—",
-      aiDetected: true,
-      onEdit: onEdit ? () => onEdit("interests") : undefined,
-    },
-    {
-      icon: <Users className="h-5 w-5" />,
-      label: "Travelers",
-      value: details?.travelers || "—",
-      aiDetected: true,
-      onEdit: onEdit ? () => onEdit("travelers") : undefined,
-    },
-  ];
-
   return (
-    <div className={cn("grid grid-cols-1 gap-3 sm:grid-cols-2", className)}>
-      {fields.map((f) => (
-        <Field key={f.label} {...f} />
-      ))}
+    <div className={cn("flex flex-col", className)}>
+      <Field
+        emoji="📍"
+        label="Location"
+        value={details?.location}
+        placeholder="Where do you want to go?"
+        detected={!!details?.location}
+      />
+
+      <div className="pt-3">
+        <Field
+          emoji="📅"
+          label="Dates"
+          value={details?.dates}
+          placeholder="When are you traveling?"
+          detected={!!details?.dates}
+        />
+      </div>
+
+      <div className="pt-3">
+        <Field
+          emoji="💰"
+          label="Budget"
+          value={
+            details
+              ? `${details.currency} ${details.budget.toLocaleString()}`
+              : undefined
+          }
+          placeholder="Not specified"
+          detected={!!details?.budget}
+        />
+      </div>
+
+      <div className="pt-3">
+        <Field
+          emoji="✨"
+          label="Interests"
+          value={details?.interests?.join(" · ")}
+          placeholder="What do you enjoy doing?"
+          detected={!!details?.interests?.length}
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 pt-3">
+        <Field
+          emoji="🌿"
+          label="Travel style"
+          value={details?.travelStyle}
+          placeholder="Your pace"
+          detected={!!details?.travelStyle}
+          compact
+        />
+        <Field
+          emoji="👤"
+          label="Travelers"
+          value={details?.travelers}
+          placeholder="How many?"
+          detected={!!details?.travelers}
+          compact
+        />
+      </div>
     </div>
   );
 }

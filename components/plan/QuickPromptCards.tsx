@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Card } from "@/components/ui/Card";
 
 interface QuickPromptCardsProps {
   onSelect: (text: string) => void;
@@ -9,30 +8,30 @@ interface QuickPromptCardsProps {
 }
 
 const PROMPTS = [
-  { icon: "🗼", text: "Plan a 5 day trip to Japan under $1,500." },
-  { icon: "🏖️", text: "I want a relaxing beach vacation." },
-  { icon: "🍜", text: "Plan a weekend trip for food and culture." },
-  { icon: "🏕️", text: "Find me a family friendly adventure." },
+  { icon: "🌅", text: "Weekend getaway" },
+  { icon: "🍜", text: "Food & culture" },
+  { icon: "🏖️", text: "Relaxing vacation" },
+  { icon: "🧗", text: "Adventure trip" },
+  { icon: "👨‍👩‍👧", text: "Family trip" },
 ];
 
 export function QuickPromptCards({ onSelect, className }: QuickPromptCardsProps) {
   return (
     <div className={className}>
-      <p className="mb-3 font-outfit text-sm text-text-muted">
-        Or try one of these:
+      <p className="mb-3 font-outfit text-xs font-medium text-text-muted">
+        Try a quick prompt
       </p>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="flex flex-wrap gap-2">
         {PROMPTS.map((p) => (
-          <Card
+          <button
             key={p.text}
-            className="cursor-pointer p-4 transition-all duration-200 hover:border-purple hover:shadow-purple-glow"
+            type="button"
             onClick={() => onSelect(p.text)}
+            className="inline-flex items-center gap-1.5 rounded-full border border-border bg-bg-card px-3 py-1.5 font-outfit text-sm text-text-muted transition-all duration-200 hover:border-purple hover:text-text-primary"
           >
-            <div className="flex items-start gap-3">
-              <span className="text-xl">{p.icon}</span>
-              <p className="font-outfit text-sm text-text-primary">{p.text}</p>
-            </div>
-          </Card>
+            <span>{p.icon}</span>
+            <span>{p.text}</span>
+          </button>
         ))}
       </div>
     </div>

@@ -15,7 +15,7 @@ const STEPS = [
 
 export function StepIndicator({ currentStep, className }: StepIndicatorProps) {
   return (
-    <div className={cn("flex items-center justify-center w-full", className)}>
+    <div className={cn("flex items-center w-full", className)}>
       <ol className="flex items-center gap-2 sm:gap-4">
         {STEPS.map((step, i) => {
           const isCompleted = step.num < currentStep;

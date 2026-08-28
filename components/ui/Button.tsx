@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-grad-purple text-white shadow-purple-glow hover:shadow-[0_0_40px_rgba(108,99,255,0.8)] hover:scale-[1.02] active:scale-[0.98]",
+          "bg-grad-purple text-white shadow-[0_8px_10px_-6px_rgba(108,99,255,0.25),0_20px_25px_-5px_rgba(108,99,255,0.25)] hover:shadow-[0_8px_10px_-6px_rgba(108,99,255,0.4),0_20px_25px_-5px_rgba(108,99,255,0.4)] hover:scale-[1.02] active:scale-[0.98]",
         secondary:
           "bg-transparent border border-border text-text-primary hover:border-purple hover:bg-white/5",
         teal: "bg-teal text-bg-base hover:bg-teal-dark shadow-[0_0_20px_rgba(0,201,167,0.4)] hover:scale-[1.02]",
@@ -20,7 +20,7 @@ const buttonVariants = cva(
       size: {
         sm: "h-9 px-4 text-sm",
         md: "h-11 px-6 text-base",
-        lg: "h-14 px-8 text-lg",
+        lg: "h-[52px] px-8 text-base",
         icon: "h-10 w-10 p-0",
       },
     },

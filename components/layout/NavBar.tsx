@@ -3,26 +3,27 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
-import { Search, Sparkles, LogOut, User as UserIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { Search, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
 
 const NAV_LINKS = [
   { href: "/explore", label: "Explore" },
   { href: "/my-trips", label: "My Trips" },
+  { href: "/saved", label: "Saved" },
 ];
 
 export function NavBar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [query, setQuery] = React.useState("");
+  const initial = session?.user?.name?.[0] || session?.user?.email?.[0] || "A";
 
   return (
     <header className="sticky top-0 z-50 glass-nav">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex h-16 max-w-[1500px] items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-grad-purple text-sm font-bold text-white shadow-logo">
             W
@@ -68,41 +69,18 @@ export function NavBar() {
             />
           </form>
 
-          {status === "authenticated" ? (
-            <div className="flex items-center gap-2">
-              <span className="hidden items-center gap-1.5 text-sm text-text-muted sm:flex">
-                <UserIcon className="h-4 w-4" />
-                {session.user?.name || session.user?.email}
-              </span>
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => signOut({ callbackUrl: "/login" })}
-                className="gap-1.5"
-              >
-                <LogOut className="h-3.5 w-3.5" />
-                Log out
-              </Button>
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="inline-flex items-center rounded-pill border border-border px-4 py-2 font-outfit text-sm font-semibold text-text-primary transition-colors hover:border-purple"
-            >
-              Log in
-            </Link>
-          )}
-
-          <Link
-            href="/plan/step-1"
-            className="inline-flex items-center gap-1.5 rounded-pill bg-grad-purple px-4 py-2 font-outfit text-sm font-semibold text-white shadow-purple-glow transition-transform hover:scale-105"
+          <button
+            className="flex h-8 w-8 items-center justify-center rounded-full text-text-muted transition-colors hover:text-text-primary"
+            aria-label="Settings"
           >
-            <Sparkles className="h-4 w-4" />
-            Plan
-          </Link>
+            <Settings className="h-4 w-4" />
+          </button>
+
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-grad-purple text-xs font-bold text-white">
+            {initial.toUpperCase()}
+          </div>
         </div>
       </div>
     </header>
   );
 }
-

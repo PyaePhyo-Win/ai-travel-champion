@@ -8,14 +8,14 @@ const config = {
       colors: {
         purple: "#6C63FF",
         "purple-light": "#8B7CF8",
-        "grad-purple": "linear-gradient(164deg, #6C63FF 0%, #8B7CF8 100%)",
+        "grad-purple": "linear-gradient(135deg, #6C63FF 0%, #8B7CF8 100%)",
         "grad-purple-soft":
           "linear-gradient(135deg, rgba(108,99,255,0.15) 0%, rgba(139,124,248,0.05) 100%)",
         teal: "#00C9A7",
         "teal-dark": "#00B894",
         "teal-bg": "#0F2D32",
-        "bg-base": "#0A0B14",
-        "bg-card": "#0D0D18",
+        "bg-base": "#0D0D18",
+        "bg-card": "#1C1D2E",
         "bg-nav": "rgba(18,19,31,0.85)",
         border: "#23243A",
         "text-primary": "#FFFFFF",
