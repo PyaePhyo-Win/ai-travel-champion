@@ -183,7 +183,6 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 ## 10. Notes
 
-- Gemini model `gemini-3.6-flash` does not exist; using `gemini-2.0-flash-exp` with `gemini-1.5-flash` fallback.
 - MapLibre + Stadia Maps is fully free (no token needed).
 - Nominatim geocoding is free but rate-limited (1 req/sec).
 - Demo trip (`is_demo = true`) is reachable via the "View demo trip" card on Explore after login; its Edit button is hidden because it has no owner.
